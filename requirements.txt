@@ -1,0 +1,7 @@
+pandas
+polars
+entsoe-py
+numpy
+scikit-learn
+xgboost
+plotly
