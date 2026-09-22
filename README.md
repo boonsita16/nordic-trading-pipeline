@@ -30,8 +30,9 @@ Useful modes:
 
 - `python main.py --mode fetch` runs ingestion only.
 - `python main.py --mode analyze --no-plots` analyzes the existing database without opening Plotly windows.
+- `python main.py --mode analyze` prints all prediction rows, lists the available bidding zones, and prompts for the zone to compare in the Plotly chart.
 
-Dates, database location, token file, and the prediction plot zone can be changed with `--start`, `--end`, `--database`, `--api-token-file`, and `--selected-zone`.
+Dates, database location, token file, and the prediction plot zone can be changed with `--start`, `--end`, `--database`, `--api-token-file`, and `--selected-zone`. Supplying `--selected-zone` skips the prompt.
 
 ## Notebooks
 

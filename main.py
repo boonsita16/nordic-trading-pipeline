@@ -3,6 +3,8 @@
 import argparse
 from pathlib import Path
 
+import polars as pl
+
 from pipeline import (
     PipelineConfig,
     create_features,
@@ -22,7 +24,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--api-token-file", type=Path, default=Path("entsoe-api.txt"))
     parser.add_argument("--start", default="2026-06-14")
     parser.add_argument("--end", default="2026-06-29")
-    parser.add_argument("--selected-zone", default="SE_4")
+    parser.add_argument("--selected-zone", help="Zone to plot; prompts when omitted")
     parser.add_argument("--no-plots", action="store_true")
     return parser.parse_args()
 
@@ -47,11 +49,24 @@ def main() -> None:
         model_result = train_model(features, config.train_fraction)
         print(f"MAE: {model_result.mae:.2f} EUR/MWh")
         print(f"RMSE: {model_result.rmse:.2f} EUR/MWh")
-        print("Model statistics:")
-        print(model_result.statistics)
+        with pl.Config(tbl_rows=-1):
+            print("All prediction rows:")
+            print(model_result.results)
+            print("Model statistics:")
+            print(model_result.statistics)
         if not args.no_plots:
+            available_zones = sorted(model_result.results["bidding_zone"].unique().to_list())
+            selected_zone = args.selected_zone
+            if selected_zone is None:
+                print(f"Available bidding zones: {', '.join(available_zones)}")
+                selected_zone = input("Enter the bidding zone to plot: ").strip().upper()
+            if selected_zone not in available_zones:
+                raise ValueError(
+                    f"Unknown bidding zone '{selected_zone}'. "
+                    f"Choose one of: {', '.join(available_zones)}"
+                )
             create_price_plot(features).show()
-            create_prediction_plot(model_result.results, config.selected_zone).show()
+            create_prediction_plot(model_result.results, selected_zone).show()
 
 
 if __name__ == "__main__":
