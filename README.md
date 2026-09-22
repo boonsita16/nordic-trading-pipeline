@@ -59,4 +59,4 @@ The trained ML model includes those high-price periods of the Danish bidding zon
 
 2. Improve the accuracy of the model by including weather data to capture the possibility of 1) high demand due to heatwave and 2) low renewable energy supplies.
 
-3. Add power production by production type to the database to to gain a better understanding the day-ahead price spikes and drops.
+3. Add power productions by production type to the database to gain a better understanding the day-ahead price spikes and drops.
