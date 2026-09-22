@@ -50,26 +50,13 @@ The interactive plots in notebook 02 are available through [nbviewer](https://nb
 
 ## Results and future development
 
-The visualization shows that Denmark bidding zones had price spikes between June 23 and 24, diverging from other zones, which indicates a transmission bottleneck during low wind power production.
+The visualization shows that Denmark bidding zones had day-ahead price spikes in the evenings of June 23 and 24, diverging from other zones. The high day-ahead prices were probably due to the low offshore and onshore wind energy generation combinding with zero solar energy during the nights. Therefore, according to the Merit Order, expensive oil and gas plants set the clearing prices of those periods. This can be seen in the [Actual Electricity generation](https://transparency.entsoe.eu/generation/actual/perType/generation?appState=%7B%22sa%22%3A%5B%22BZN%7C10YDK-2--------M%22%5D%2C%22st%22%3A%22BZN%22%2C%22mm%22%3Atrue%2C%22ma%22%3Afalse%2C%22sp%22%3A%22HALF%22%2C%22dt%22%3A%22CHART%22%2C%22df%22%3A%5B%222026-06-20%22%2C%222026-06-26%22%5D%2C%22tz%22%3A%22CET%22%2C%22ii%22%3Anull%2C%22ps%22%3Anull%7D) where it had higher share of fossil oil and gas, compared to other periods of time.
 
-Future improvements include automated tests, scheduled production execution, and weather data to capture high demand during heatwaves and low supply from wind generation.
-
-#01-pull-entsoe-to-database-polars-sqlite3.ipynb 
-
-Fetch the data from ENTSO-E using API into Pandas dataframe. The Pandas dataframe is converted into a Polars dataframe for faster data handling.  The data is written into a local database using Python SQLite3.
-
-#02-analyze-database.ipynb 
-
-Extract the data from the local database into Polars dataframe to analyze the prices of the selected bidding zones and period. Lad features are added for comparing the price in the previous hour, day, and week. Add the columns that indicate hour of the day, weekend and weekdays, and month to capture market cyclicality. Then, the data is split into two datasets: 80% is train dataset and last 20% is test dataset, by Chronological Time Split since it is a time-series data. The XGBRegressor model is trained, and the price of the last 20% period is predicted by the model. The predicted and actual data are compared.
-
-The interactive plots on notebook #02-analyze-database can be access via [nbviewer](https://nbviewer.org/github/boonsita16/nordic-trading-pipeline/blob/main/notebook/02-analyze-database.ipynb)
-
-## Discuss result and propose development
-The visualization shows that Denmark bidding zones had price spikes between June 23-24, diverging from other zones which indicates the transmission bottleneck due to low wind power production.
-
-The train data, however, includes those heatwave period, and it results in the highest maximum overestimation of 112.6 EUR/MWh in DK2 Zone. 
+The trained ML model includes those high-price periods of the Danish bidding zones, and therefore results in high maximum overestimation in the evenings in both zones. Similar to the Danish zones, the model statistics also shows a high mean-absolut-error in Swedish SE4 zone. This can come from a high volatility (still below the Danish's) of the train dataset.  
 
 ## Future development
-1. Develop the codes into End-to-End Production Pipeline by refactoring the notebooks into standard source code and a main.py
+1. Develop the codes into End-to-End Production Pipeline by refactoring the notebooks into standard source code and a main.py (done)
 
-2. Improve the accuracy of the model by including weather data to capture possibilities of 1) high demand due to heatwave and 2) low supply due to low wind.
+2. Improve the accuracy of the model by including weather data to capture possibilities of 1) high demand due to heatwave and 2) low renewable energy supplies.
+
+3. Add power production by production type to the database to get better understanding of the day-ahead price spike/drop.

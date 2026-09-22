@@ -50,8 +50,6 @@ def main() -> None:
         print(f"MAE: {model_result.mae:.2f} EUR/MWh")
         print(f"RMSE: {model_result.rmse:.2f} EUR/MWh")
         with pl.Config(tbl_rows=-1):
-            print("All prediction rows:")
-            print(model_result.results)
             print("Model statistics:")
             print(model_result.statistics)
         if not args.no_plots:

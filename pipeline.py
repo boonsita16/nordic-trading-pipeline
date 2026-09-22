@@ -233,13 +233,13 @@ def train_model(df: pl.DataFrame, train_fraction: float = 0.8) -> ModelResult:
                 (pl.col("predicted_price") - pl.col("actual_price"))
                 .abs()
                 .mean()
-                .alias("MAE"),
+                .alias("mean_absolute_error"),
                 (pl.col("predicted_price") - pl.col("actual_price"))
                 .max()
                 .alias("max_overestimation"),
             ]
         )
-        .sort("MAE", descending=True)
+        .sort("mean_absolute_error", descending=True)
     )
     return ModelResult(
         results=results,
