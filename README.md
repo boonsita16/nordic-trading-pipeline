@@ -50,13 +50,13 @@ The interactive plots in notebook 02 are available through [nbviewer](https://nb
 
 ## Results and future development
 
-The visualization shows that Danish bidding zones had day-ahead price spikes in the evenings of June 23 and 24, diverging from other zones. The high day-ahead prices were probably due to the low offshore and onshore wind energy generation combinding with zero solar energy during the nights. Therefore, according to the Merit Order, expensive oil and gas plants set the clearing prices of those periods. This can be seen in the [Actual Electricity generation](https://transparency.entsoe.eu/generation/actual/perType/generation?appState=%7B%22sa%22%3A%5B%22BZN%7C10YDK-2--------M%22%5D%2C%22st%22%3A%22BZN%22%2C%22mm%22%3Atrue%2C%22ma%22%3Afalse%2C%22sp%22%3A%22HALF%22%2C%22dt%22%3A%22CHART%22%2C%22df%22%3A%5B%222026-06-20%22%2C%222026-06-26%22%5D%2C%22tz%22%3A%22CET%22%2C%22ii%22%3Anull%2C%22ps%22%3Anull%7D) where it had higher share of fossil oil and gas, compared to other periods of time.
+The visualization shows that Danish bidding zones had day-ahead price spikes in the evenings of June 23 and 24, diverging from other Nordic zones. The high day-ahead prices were probably due to the low offshore and onshore wind energy generation combinding with zero solar energy during the nights. Therefore, according to the Merit Order, expensive oil and gas plants set the clearing prices of those periods. This can be seen in the [Actual Electricity generation](https://transparency.entsoe.eu/generation/actual/perType/generation?appState=%7B%22sa%22%3A%5B%22BZN%7C10YDK-2--------M%22%5D%2C%22st%22%3A%22BZN%22%2C%22mm%22%3Atrue%2C%22ma%22%3Afalse%2C%22sp%22%3A%22HALF%22%2C%22dt%22%3A%22CHART%22%2C%22df%22%3A%5B%222026-06-20%22%2C%222026-06-26%22%5D%2C%22tz%22%3A%22CET%22%2C%22ii%22%3Anull%2C%22ps%22%3Anull%7D) where it had higher share of fossil oil and gas, compared to other periods of time.
 
-The trained ML model includes those high-price periods of the Danish bidding zones, and therefore results in high maximum overestimation in the evenings in both zones. Similar to the Danish zones, the model statistics also shows a high mean-absolut-error in Swedish SE4 zone. This can come from a high volatility (still below the Danish's) of the train dataset.  
+The trained ML model includes those high-price periods of the Danish bidding zones, and therefore results in high maximum overestimation in the evenings in both zones. The model statistics also show a high mean-absolut-error in Swedish SE4 zone, meaning that it routinely overestimates/underestimates the day-ahead prices. This can come from a high volatility (though below the Danish) of the train dataset and needs further calibration.  
 
 ## Future development
 1. Develop the code into an end-to-end production pipeline by refactoring the notebooks into standard source code and a main.py (done)
 
 2. Improve the accuracy of the model by including weather data to capture the possibility of 1) high demand due to heatwave and 2) low renewable energy supplies.
 
-3. Add power productions by production type to the database to gain a better understanding the day-ahead price spikes and drops.
+3. Add power productions by production type to the database to gain a better understanding of day-ahead price spikes and drops.
