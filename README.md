@@ -11,7 +11,7 @@ The pipeline is available as standard Python source files:
 
 - `pipeline.py` contains database ingestion, feature engineering, model training, evaluation, and plotting functions.
 - `main.py` provides the command-line entry point.
-- `notebook/` contains the original exploratory notebooks.
+- `notebook/` contains the original exploratory notebooks and a downloadable [database](https://github.com/boonsita16/nordic-trading-pipeline/blob/main/notebook/nordic_energy_market.db).
 
 Install the dependencies and provide an ENTSO-E API key either in the `ENTSOE_API_KEY` environment variable or in `entsoe-api.txt` at the project root:
 
